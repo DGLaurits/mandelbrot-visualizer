@@ -20,7 +20,7 @@ def make_coordinates(width, height, zoom, xy):
     new_y = new_y * zoom
     return (new_x, new_y)
 
-def draw_mandelbrot(size: tuple[int, int], revolutions: int, zoom: float):
+def create_mandelbrot(size: tuple[int, int], revolutions: int, zoom: float):
     img = Image.new("RGB", (size[0], size[1]))
     for x in range(size[0]):
         for y in range(size[1]):
