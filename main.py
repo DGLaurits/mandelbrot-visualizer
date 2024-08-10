@@ -3,8 +3,8 @@ from tkinter import ttk
 
 WIDTH = 600
 HEIGHT = 400
-REVOLUTIONS = 5
-ZOOM = 0.1
+REVOLUTIONS = 10
+ZOOM = 0.02
 
 root = Tk()
 root.title("Mandelbrot")
@@ -37,8 +37,8 @@ def make_coordinates(coordinates):
     return (new_x, new_y)
 
 def graph():
-    for x in range(HEIGHT):
-        for y in range(WIDTH):
+    for x in range(WIDTH):
+        for y in range(HEIGHT):
             coordinates = make_coordinates((x, y))
             mandelbrot_value = mandelbrot(coordinates, REVOLUTIONS)
             if mandelbrot_value == REVOLUTIONS:
