@@ -21,13 +21,11 @@ def make_coordinates(width, height, zoom, xy, offset_xy):
     return (new_x, new_y)
 
 def create_mandelbrot(size: tuple[int, int], revolutions: int, zoom: float, offset_xy: tuple[int, int]):
+    color_factor = 255//revolutions
     img = Image.new("RGB", (size[0], size[1]))
     for x in range(size[0]):
         for y in range(size[1]):
             coordinates = make_coordinates(size[0], size[1], zoom, (x, y), offset_xy)
             mandelbrot_value = mandelbrot(coordinates, revolutions)
-            if mandelbrot_value == revolutions:
-                img.putpixel((x, y), (200, 230, 255))
-            else:
-                img.putpixel((x, y), (0, 0, 0)) 
+            img.putpixel((x, y), (color_factor*mandelbrot_value, color_factor*mandelbrot_value, color_factor*mandelbrot_value))
     return img

@@ -5,7 +5,7 @@ from PIL import ImageTk, Image
 
 WIDTH = 800
 HEIGHT = 600
-REVOLUTIONS = 100
+REVOLUTIONS = 50
 ZOOM = 0.01
 OFFSET = (0, 0)
 
