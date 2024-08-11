@@ -5,9 +5,13 @@ from PIL import ImageTk, Image
 
 WIDTH = 800
 HEIGHT = 600
-REVOLUTIONS = 50
+REVOLUTIONS = 30
 ZOOM = 0.01
 OFFSET = (0, 0)
+
+offsets = []
+
+level = -1
 
 def zoom_on_click(eventorigin):
     x = eventorigin.x
@@ -20,8 +24,28 @@ def zoom_on_click(eventorigin):
     ZOOM *= 0.5
     draw_mandelbrot()
 
+def zoom_out(eventorigin):
+    global level
+    global OFFSET
+    global ZOOM
+    if level > 0:
+        level -= 1
+        ZOOM *= 2
+        OFFSET = offsets[level]
+        img = PhotoImage(file=f"images/image{level}.png")
+        label.configure(image=img)
+        label.image = img
+
 def draw_mandelbrot():
+    global level
     tmp_img = create_mandelbrot((WIDTH, HEIGHT), REVOLUTIONS, ZOOM, OFFSET)
+    level += 1
+    print(len(offsets), level)
+    if len(offsets) <= level:
+        offsets.append(OFFSET)
+    else:
+        offsets[level] = OFFSET
+    tmp_img.save(f"images/image{level}.png", "PNG")
     img = ImageTk.PhotoImage(tmp_img)
     label.configure(image=img)
     label.image = img
@@ -37,5 +61,6 @@ draw_mandelbrot()
 
 
 label.bind("<Button 1>", zoom_on_click)
+root.bind("<Button 3>", zoom_out)
 
 root.mainloop()
