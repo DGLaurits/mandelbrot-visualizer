@@ -5,7 +5,7 @@ from PIL import ImageTk, Image
 
 WIDTH = 800
 HEIGHT = 600
-REVOLUTIONS = 80
+REVOLUTIONS = 200
 ZOOM = 0.005
 ZOOM_ON_CLICK = 0.2
 OFFSET = (-0.8, 0)
@@ -41,7 +41,6 @@ def draw_mandelbrot():
     global level
     tmp_img = create_mandelbrot_image((WIDTH, HEIGHT), REVOLUTIONS, ZOOM, OFFSET)
     level += 1
-    print(len(offsets), level)
     if len(offsets) <= level:
         offsets.append(OFFSET)
     else:
