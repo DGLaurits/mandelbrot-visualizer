@@ -1,13 +1,14 @@
 from tkinter import *
 from tkinter import ttk
-from mandelbrot import create_mandelbrot
+from mandelbrot import create_mandelbrot_image
 from PIL import ImageTk, Image
 
 WIDTH = 800
 HEIGHT = 600
-REVOLUTIONS = 30
-ZOOM = 0.01
-OFFSET = (0, 0)
+REVOLUTIONS = 80
+ZOOM = 0.005
+ZOOM_ON_CLICK = 0.2
+OFFSET = (-0.8, 0)
 
 offsets = []
 
@@ -21,7 +22,7 @@ def zoom_on_click(eventorigin):
     new_offset = (OFFSET[0] + (x-(WIDTH/2))*ZOOM,
                   OFFSET[1] + (y-(HEIGHT/2))*ZOOM)
     OFFSET = new_offset
-    ZOOM *= 0.5
+    ZOOM *= ZOOM_ON_CLICK
     draw_mandelbrot()
 
 def zoom_out(eventorigin):
@@ -30,7 +31,7 @@ def zoom_out(eventorigin):
     global ZOOM
     if level > 0:
         level -= 1
-        ZOOM *= 2
+        ZOOM *= 1/ZOOM_ON_CLICK
         OFFSET = offsets[level]
         img = PhotoImage(file=f"images/image{level}.png")
         label.configure(image=img)
@@ -38,7 +39,7 @@ def zoom_out(eventorigin):
 
 def draw_mandelbrot():
     global level
-    tmp_img = create_mandelbrot((WIDTH, HEIGHT), REVOLUTIONS, ZOOM, OFFSET)
+    tmp_img = create_mandelbrot_image((WIDTH, HEIGHT), REVOLUTIONS, ZOOM, OFFSET)
     level += 1
     print(len(offsets), level)
     if len(offsets) <= level:
